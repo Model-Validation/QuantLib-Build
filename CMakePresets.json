@@ -1,0 +1,218 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "EIGEN3_INCLUDE_DIR": "C:/ProgramData/chocolatey/lib/eigen/include/eigen3/",
+        "scs_DIR": "C:/ws/git/scs/out/build/x64-Debug/",
+        "isda_cds_model_DIR": "C:/ws/libraries/isda_cds_model_c_v1.8.3/build",
+        "QL_BOOST_VERSION": "1.88.0",
+        "QL_USE_STD_SHARED_PTR": "ON",
+        "QL_USE_STD_ANY": "ON",
+        "QL_USE_STD_OPTIONAL": "ON",
+        "QL_BUILD_TEST_SUITE": "OFF",
+        "QL_BUILD_EXAMPLES": "OFF",
+        "QL_ENABLE_ISDA_CDS": "ON",
+        "BOOST": "C:/local/boost_1_88_0",
+        "BOOST_INCLUDE_DIRS": "C:/local/boost_1_88_0/boost",
+        "BOOST_LIB64": "C:/local/boost_1_88_0/lib64-msvc-14.3",
+        "BUILD_PYTHON_BINDINGS": "ON"
+      },
+      "environment": {
+        "BOOST_ROOT": "C:/local/boost_1_88_0/lib64-msvc-14.3/cmake/Boost-1.88.0",
+        "BOOST": "C:/local/boost_1_88_0",
+        "BOOST_INCLUDE_DIRS": "C:/local/boost_1_88_0/boost",
+        "BOOST_LIB64": "C:/local/boost_1_88_0/lib64-msvc-14.3"
+      }
+    },
+    {
+      "name": "windows-msvc-base",
+      "hidden": true,
+      "inherits": "windows-base",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-msvc-x64"
+        }
+      }
+    },
+    {
+      "name": "windows-clang-base",
+      "hidden": true,
+      "inherits": "windows-base",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    },
+    {
+      "name": "ninja",
+      "hidden": true,
+      "generator": "Ninja"
+    },
+    {
+      "name": "_release",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "_debug",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "_relwithdebinfo",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "windows-msvc-release",
+      "displayName": "Windows MSVC Release",
+      "description": "Release build using MSVC with Python bindings",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja",
+        "_release"
+      ]
+    },
+    {
+      "name": "windows-msvc-debug",
+      "displayName": "Windows MSVC Debug", 
+      "description": "Debug build using MSVC with Python bindings",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja",
+        "_debug"
+      ]
+    },
+    {
+      "name": "windows-msvc-relwithdebinfo",
+      "displayName": "Windows MSVC RelWithDebInfo",
+      "description": "RelWithDebInfo build using MSVC with Python bindings",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja",
+        "_relwithdebinfo"
+      ]
+    },
+    {
+      "name": "windows-clang-release",
+      "displayName": "Windows Clang Release",
+      "description": "Release build using Clang with Python bindings",
+      "inherits": [
+        "windows-clang-base",
+        "ninja",
+        "_release"
+      ]
+    },
+    {
+      "name": "windows-clang-debug",
+      "displayName": "Windows Clang Debug",
+      "description": "Debug build using Clang with Python bindings", 
+      "inherits": [
+        "windows-clang-base",
+        "ninja",
+        "_debug"
+      ]
+    },
+    {
+      "name": "windows-clang-relwithdebinfo",
+      "displayName": "Windows Clang RelWithDebInfo",
+      "description": "RelWithDebInfo build using Clang with Python bindings",
+      "inherits": [
+        "windows-clang-base",
+        "ninja",
+        "_relwithdebinfo"
+      ]
+    },
+    {
+      "name": "library-only-release",
+      "displayName": "QuantLib Library Only (Release)",
+      "description": "Build only the QuantLib C++ library without Python bindings",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja", 
+        "_release"
+      ],
+      "cacheVariables": {
+        "BUILD_PYTHON_BINDINGS": "OFF"
+      }
+    },
+    {
+      "name": "library-only-debug", 
+      "displayName": "QuantLib Library Only (Debug)",
+      "description": "Build only the QuantLib C++ library without Python bindings",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja",
+        "_debug"
+      ],
+      "cacheVariables": {
+        "BUILD_PYTHON_BINDINGS": "OFF"
+      }
+    },
+    {
+      "name": "no-swig-fallback",
+      "displayName": "QuantLib Library (No SWIG)",
+      "description": "Fallback preset when SWIG is not available",
+      "inherits": [
+        "windows-msvc-base",
+        "ninja",
+        "_relwithdebinfo"
+      ],
+      "cacheVariables": {
+        "BUILD_PYTHON_BINDINGS": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-msvc-release",
+      "configurePreset": "windows-msvc-release"
+    },
+    {
+      "name": "windows-msvc-debug", 
+      "configurePreset": "windows-msvc-debug"
+    },
+    {
+      "name": "windows-msvc-relwithdebinfo",
+      "configurePreset": "windows-msvc-relwithdebinfo"
+    },
+    {
+      "name": "library-only-release",
+      "configurePreset": "library-only-release"
+    },
+    {
+      "name": "library-only-debug",
+      "configurePreset": "library-only-debug"
+    },
+    {
+      "name": "no-swig-fallback",
+      "configurePreset": "no-swig-fallback"
+    }
+  ]
+}
